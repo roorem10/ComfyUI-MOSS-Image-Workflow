@@ -1,0 +1,909 @@
+{
+  "id": "0367da29-31a7-4e90-8e0e-3c5f43a6a146",
+  "revision": 0,
+  "last_node_id": 20,
+  "last_link_id": 23,
+  "nodes": [
+    {
+      "id": 20,
+      "type": "Note",
+      "pos": [
+        -540,
+        65
+      ],
+      "size": [
+        510,
+        710
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "START HERE — NATIVE MOSS / ALL FOUR CHECKPOINTS",
+      "properties": {},
+      "widgets_values": [
+        "MOSS-IMAGE — UNIVERSAL NATIVE COMFYUI WORKFLOW\n\nNOT the old MOSSImageHFLoader. This workflow uses built-in loaders and a SINGLE diffusion-model dropdown for switching:\n • moss_image_sft_int8_convrot.safetensors (5.41 GB)\n • moss_image_sft_bf16.safetensors (10.2 GB)\n • moss_image_base_int8_convrot.safetensors (5.41 GB)\n • moss_image_base_bf16.safetensors (10.2 GB)\n\nDownload chosen variants from https://huggingface.co/Comfy-Org/MOSS-Image/tree/main/diffusion_models\nAll four share the SAME text encoder and VAE; download once:\n • text_encoders/qwen3.5_9b_w4a8_gptq.safetensors (7.34 GB)\n • vae/flux2-vae.safetensors (~0.34 GB)\nAlternative text encoder: qwen3.5_9b_int8_convrot.safetensors (9.75 GB).\n\nPut files in the folders under your ComfyUI Desktop shared models path:\n ComfyUI/models/ (or your ComfyUI Desktop shared models folder)\n\nCOMFYUI CORE: Requires a build containing native MOSS support (CLIPLoader type moss_image). If the type value is invalid, update ComfyUI core. No MOSS custom-node pack is required for native support.\n\nIMPORTANT SAMPLER FIX: Use ModelSamplingAuraFlow shift=5; the older SD3 node can generate pure noise with native MOSS weights. Do not substitute SD3.\n\nHOW TO SWITCH MODELS: On the UNETLoader titled '01 MOSS MODEL', choose any installed Base/SFT INT8/BF16 .safetensors. The prompt, text encoder, VAE and sampler stay connected.\n\nSTART LOW: Change the saved 2560x1088 resolution to 768x768 (batch 1) for your first test. This shared file includes example positive and negative prompts, 50 steps, CFG 3, and a fixed seed. Change those settings as desired. SLG single layer '22' is enabled.\n\nINT8 + W4A8 is a starting point for RTX 5080 16GB + 32GB RAM, not a memory guarantee. Close other GPU-heavy programs; offloading may be slow.\n\nSource: https://github.com/Comfy-Org/ComfyUI/pull/17095 and https://huggingface.co/Comfy-Org/MOSS-Image\n"
+      ],
+      "widgets_values_named": {
+        "text": "MOSS-IMAGE — UNIVERSAL NATIVE COMFYUI WORKFLOW\n\nNOT the old MOSSImageHFLoader. This workflow uses built-in loaders and a SINGLE diffusion-model dropdown for switching:\n • moss_image_sft_int8_convrot.safetensors (5.41 GB)\n • moss_image_sft_bf16.safetensors (10.2 GB)\n • moss_image_base_int8_convrot.safetensors (5.41 GB)\n • moss_image_base_bf16.safetensors (10.2 GB)\n\nDownload chosen variants from https://huggingface.co/Comfy-Org/MOSS-Image/tree/main/diffusion_models\nAll four share the SAME text encoder and VAE; download once:\n • text_encoders/qwen3.5_9b_w4a8_gptq.safetensors (7.34 GB)\n • vae/flux2-vae.safetensors (~0.34 GB)\nAlternative text encoder: qwen3.5_9b_int8_convrot.safetensors (9.75 GB).\n\nPut files in the folders under your ComfyUI Desktop shared models path:\n ComfyUI/models/ (or your ComfyUI Desktop shared models folder)\n\nCOMFYUI CORE: Requires a build containing native MOSS support (CLIPLoader type moss_image). If the type value is invalid, update ComfyUI core. No MOSS custom-node pack is required for native support.\n\nIMPORTANT SAMPLER FIX: Use ModelSamplingAuraFlow shift=5; the older SD3 node can generate pure noise with native MOSS weights. Do not substitute SD3.\n\nHOW TO SWITCH MODELS: On the UNETLoader titled '01 MOSS MODEL', choose any installed Base/SFT INT8/BF16 .safetensors. The prompt, text encoder, VAE and sampler stay connected.\n\nSTART LOW: Change the saved 2560x1088 resolution to 768x768 (batch 1) for your first test. This shared file includes example positive and negative prompts, 50 steps, CFG 3, and a fixed seed. Change those settings as desired. SLG single layer '22' is enabled.\n\nINT8 + W4A8 is a starting point for RTX 5080 16GB + 32GB RAM, not a memory guarantee. Close other GPU-heavy programs; offloading may be slow.\n\nSource: https://github.com/Comfy-Org/ComfyUI/pull/17095 and https://huggingface.co/Comfy-Org/MOSS-Image\n"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        20,
+        90
+      ],
+      "size": [
+        490,
+        122
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "unet_name",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            13
+          ]
+        }
+      ],
+      "title": "01 · MOSS MODEL — SWITCH BASE / SFT / INT8 / BF16",
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "moss_image_sft_bf16.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "moss_image_sft_bf16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        20,
+        295
+      ],
+      "size": [
+        490,
+        136
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "type",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "device",
+          "name": "device",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "device"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 0,
+          "links": [
+            1,
+            2
+          ]
+        }
+      ],
+      "title": "02 · QWEN3.5 TEXT ENCODER — W4A8 FOR LOWER VRAM",
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3.5_9b_w4a8_gptq.safetensors",
+        "moss_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3.5_9b_w4a8_gptq.safetensors",
+        "type": "moss_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        20,
+        502
+      ],
+      "size": [
+        490,
+        80
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 0,
+          "links": [
+            23
+          ]
+        }
+      ],
+      "title": "03 · FLUX.2 VAE",
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "flux2-vae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "flux2-vae.safetensors"
+      }
+    },
+    {
+      "id": 15,
+      "type": "ModelSamplingAuraFlow",
+      "pos": [
+        560,
+        90
+      ],
+      "size": [
+        375.4625,
+        90
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 13
+        },
+        {
+          "localized_name": "shift",
+          "name": "shift",
+          "type": "FLOAT",
+          "widget": {
+            "name": "shift"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "sampling",
+          "name": "sampling",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "sampling"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            16
+          ]
+        }
+      ],
+      "title": "Shift 5 · AuraFlow (NOT SD3; prevents noise issue)",
+      "properties": {
+        "Node name for S&R": "ModelSamplingAuraFlow"
+      },
+      "widgets_values": [
+        5,
+        "flow"
+      ],
+      "widgets_values_named": {
+        "shift": 5,
+        "sampling": "flow"
+      }
+    },
+    {
+      "id": 13,
+      "type": "SkipLayerGuidanceDiTSimple",
+      "pos": [
+        940,
+        90
+      ],
+      "size": [
+        340,
+        260
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 16
+        },
+        {
+          "localized_name": "double_layers",
+          "name": "double_layers",
+          "type": "STRING",
+          "widget": {
+            "name": "double_layers"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "single_layers",
+          "name": "single_layers",
+          "type": "STRING",
+          "widget": {
+            "name": "single_layers"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "start_percent",
+          "name": "start_percent",
+          "type": "FLOAT",
+          "widget": {
+            "name": "start_percent"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "end_percent",
+          "name": "end_percent",
+          "type": "FLOAT",
+          "widget": {
+            "name": "end_percent"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            17
+          ]
+        }
+      ],
+      "title": "Negative-branch layer skip · 22 (blank = off)",
+      "properties": {
+        "Node name for S&R": "SkipLayerGuidanceDiTSimple"
+      },
+      "widgets_values": [
+        "",
+        "22",
+        0,
+        1
+      ],
+      "widgets_values_named": {
+        "double_layers": "",
+        "single_layers": "22",
+        "start_percent": 0,
+        "end_percent": 1
+      }
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        560,
+        400
+      ],
+      "size": [
+        430,
+        240
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1
+        },
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            18
+          ]
+        }
+      ],
+      "title": "Positive prompt / paste JSON layout here",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "Create an ultra-dramatic **anime x realism hybrid action scene** in a **cinematic widescreen format**.\n\nThe image should combine a **modern high-end anime-style illustrated magical girl** with a **real-world photorealistic city environment**, composited together seamlessly in a believable and visually explosive way.\n\nShow a real-world downtown city street at dusk or night, with tall glass-and-concrete office buildings, traffic lights, crosswalks, parked cars, illuminated windows, storefronts, smoke, debris, and realistic urban detail. The city background must look like a genuine live-action photograph of a modern city, not an illustrated background.\n\nIn the foreground, show one **anime-style magical girl** in an intense battle pose in the middle of the street. She is clearly illustrated in a polished modern anime style with crisp linework, dramatic cel shading, expressive eyes, flowing hair, and a highly detailed magical-girl combat outfit with ribbons, armor accents, glowing effects, and elegant but dynamic design.\n\nShe is firing a massive glowing energy beam from her outstretched hands toward a nearby real-life building.\n\nThe beam should be:\n- bright, powerful, and visually spectacular\n- casting strong colored light across the environment\n- surrounded by sparks, smoke, shockwaves, glowing particles, and debris\n- visibly striking the side of a real photorealistic building\n\nThe real building should show convincing destruction where the beam hits:\n- shattered windows\n- cracked concrete and steel\n- pieces of the facade exploding outward\n- smoke and dust clouds\n- chunks of debris falling\n- reflected light from the energy blast on nearby windows and wet pavement\n\nThe magical girl must remain distinctly anime-styled, while the city and destruction remain convincingly photorealistic.\n\nUse a dramatic **cinematic low-angle composition** like a theatrical action movie frame. The magical girl should be the focal point, but the real-world city destruction should also feel large, intense, and impressive.\n\nThe street should show realistic reflections, debris, and signs of battle. Cars may be abandoned or damaged. Streetlights, traffic lights, and building windows should help illuminate the scene. Smoke, dust, sparks, and shattered materials should unify the anime character and the realistic environment.\n\nThe final image should feel like a premium anime-realism hybrid action shot: explosive, dynamic, polished, and visually stunning.\n\nNo text, no logo, no watermark."
+      ],
+      "widgets_values_named": {
+        "text": "Create an ultra-dramatic **anime x realism hybrid action scene** in a **cinematic widescreen format**.\n\nThe image should combine a **modern high-end anime-style illustrated magical girl** with a **real-world photorealistic city environment**, composited together seamlessly in a believable and visually explosive way.\n\nShow a real-world downtown city street at dusk or night, with tall glass-and-concrete office buildings, traffic lights, crosswalks, parked cars, illuminated windows, storefronts, smoke, debris, and realistic urban detail. The city background must look like a genuine live-action photograph of a modern city, not an illustrated background.\n\nIn the foreground, show one **anime-style magical girl** in an intense battle pose in the middle of the street. She is clearly illustrated in a polished modern anime style with crisp linework, dramatic cel shading, expressive eyes, flowing hair, and a highly detailed magical-girl combat outfit with ribbons, armor accents, glowing effects, and elegant but dynamic design.\n\nShe is firing a massive glowing energy beam from her outstretched hands toward a nearby real-life building.\n\nThe beam should be:\n- bright, powerful, and visually spectacular\n- casting strong colored light across the environment\n- surrounded by sparks, smoke, shockwaves, glowing particles, and debris\n- visibly striking the side of a real photorealistic building\n\nThe real building should show convincing destruction where the beam hits:\n- shattered windows\n- cracked concrete and steel\n- pieces of the facade exploding outward\n- smoke and dust clouds\n- chunks of debris falling\n- reflected light from the energy blast on nearby windows and wet pavement\n\nThe magical girl must remain distinctly anime-styled, while the city and destruction remain convincingly photorealistic.\n\nUse a dramatic **cinematic low-angle composition** like a theatrical action movie frame. The magical girl should be the focal point, but the real-world city destruction should also feel large, intense, and impressive.\n\nThe street should show realistic reflections, debris, and signs of battle. Cars may be abandoned or damaged. Streetlights, traffic lights, and building windows should help illuminate the scene. Smoke, dust, sparks, and shattered materials should unify the anime character and the realistic environment.\n\nThe final image should feel like a premium anime-realism hybrid action shot: explosive, dynamic, polished, and visually stunning.\n\nNo text, no logo, no watermark."
+      }
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        560,
+        720
+      ],
+      "size": [
+        430,
+        200
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        },
+        {
+          "localized_name": "text",
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CONDITIONING",
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            19
+          ]
+        }
+      ],
+      "title": "Negative prompt · leave empty to start",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "low quality, blurry, bad anatomy, extra limbs, extra fingers, duplicate character, weak compositing, anime background, painted city, CGI city, poor destruction, weak explosion, incorrect perspective, floating debris, body intersecting objects, bad hands, watermark, text, logo"
+      ],
+      "widgets_values_named": {
+        "text": "low quality, blurry, bad anatomy, extra limbs, extra fingers, duplicate character, weak compositing, anime background, painted city, CGI city, poor destruction, weak explosion, incorrect perspective, floating debris, body intersecting objects, bad hands, watermark, text, logo"
+      }
+    },
+    {
+      "id": 6,
+      "type": "EmptyFlux2LatentImage",
+      "pos": [
+        1009.7766901773698,
+        522.7219036777624
+      ],
+      "size": [
+        321.51328125,
+        180
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "width",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "height",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "batch_size",
+          "name": "batch_size",
+          "type": "INT",
+          "widget": {
+            "name": "batch_size"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            20
+          ]
+        }
+      ],
+      "title": "Test resolution: 768x768 · final 1024x1024",
+      "properties": {
+        "Node name for S&R": "EmptyFlux2LatentImage"
+      },
+      "widgets_values": [
+        2560,
+        1088,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 2560,
+        "height": 1088,
+        "batch_size": 1
+      }
+    },
+    {
+      "id": 16,
+      "type": "KSampler",
+      "pos": [
+        1370,
+        290
+      ],
+      "size": [
+        294.1900390625,
+        474
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 17
+        },
+        {
+          "localized_name": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 18
+        },
+        {
+          "localized_name": "negative",
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 19
+        },
+        {
+          "localized_name": "latent_image",
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 20
+        },
+        {
+          "localized_name": "seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "steps",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "cfg",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "sampler_name",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "scheduler",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "denoise",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "title": "50 steps · CFG 3 · Euler / sgm_uniform",
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        608061515507312,
+        "fixed",
+        50,
+        3,
+        "euler",
+        "sgm_uniform",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 608061515507312,
+        "control_after_generate": "fixed",
+        "steps": 50,
+        "cfg": 3,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 17,
+      "type": "VAEDecode",
+      "pos": [
+        1745,
+        305
+      ],
+      "size": [
+        300,
+        180
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 22
+        },
+        {
+          "localized_name": "vae",
+          "name": "vae",
+          "type": "VAE",
+          "link": 23
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            21
+          ]
+        }
+      ],
+      "title": "Decode image",
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 18,
+      "type": "SaveImage",
+      "pos": [
+        2072.947880475493,
+        327.99836694263877
+      ],
+      "size": [
+        480,
+        600
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "title": "Save final image",
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "moss-image/native"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "moss-image/native"
+      }
+    }
+  ],
+  "links": [
+    [
+      13,
+      1,
+      0,
+      15,
+      0,
+      "MODEL"
+    ],
+    [
+      1,
+      2,
+      0,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      2,
+      2,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      23,
+      3,
+      0,
+      17,
+      1,
+      "VAE"
+    ],
+    [
+      16,
+      15,
+      0,
+      13,
+      0,
+      "MODEL"
+    ],
+    [
+      17,
+      13,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      18,
+      4,
+      0,
+      16,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      19,
+      5,
+      0,
+      16,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      6,
+      0,
+      16,
+      3,
+      "LATENT"
+    ],
+    [
+      22,
+      16,
+      0,
+      17,
+      0,
+      "LATENT"
+    ],
+    [
+      21,
+      17,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01 - SWITCH MOSS MODEL / SHARED COMPONENTS",
+      "bounding": [
+        0,
+        -5,
+        535,
+        635
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02 - PROMPTS & RESOLUTION",
+      "bounding": [
+        545,
+        335,
+        785,
+        650
+      ],
+      "color": "#8b6f40",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03 - SAMPLING (AURAFLOW + SLG)",
+      "bounding": [
+        535,
+        0,
+        1220,
+        360
+      ],
+      "color": "#7f6c9b",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "04 - IMAGE OUTPUT",
+      "bounding": [
+        1720,
+        230,
+        925,
+        720
+      ],
+      "color": "#5d946d",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.4290001868408803,
+      "offset": [
+        431.67656609921823,
+        439.8849220748657
+      ]
+    }
+  },
+  "version": 0.4
+}
